@@ -1,0 +1,17 @@
+// Play the game function
+async function playGame() {
+    const accounts = await web3.eth.requestAccounts();
+    const player = accounts[0];
+
+    contract.methods.playGame().send({
+        from: player,
+        value: web3.utils.toWei('0.01', 'ether')
+    })
+    .on('receipt', (receipt) => {
+        console.log('Game played!', receipt);
+        alert('Game played! Check your balance if you won!');
+    })
+    .on('error', (error) => {
+        console.error('Error playing game:', error);
+    });
+}
